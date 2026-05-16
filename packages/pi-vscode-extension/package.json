@@ -3,6 +3,7 @@
   "displayName": "Pi Coding Agent",
   "description": "VS Code Extension for Pi Coding Agent",
   "version": "0.1.0",
+  "type": "module",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -60,7 +61,7 @@
     "vscode:prepublish": "npm run package",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "package": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "package": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --external:@earendil-works/pi-coding-agent --format=esm --platform=node",
     "check": "tsc --noEmit"
   },
   "dependencies": {
