@@ -11,6 +11,7 @@
     "Programming Languages"
   ],
   "main": "./dist/extension.js",
+  "activationEvents": [],
   "contributes": {
     "viewsContainers": {
       "activitybar": [
