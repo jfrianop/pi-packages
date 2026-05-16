@@ -10,13 +10,39 @@
     "Programming Languages"
   ],
   "activationEvents": [],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Pi Coding Agent",
+      "properties": {
+        "pi.executablePath": {
+          "type": "string",
+          "default": "pi",
+          "description": "Path to the Pi CLI executable. Defaults to 'pi'."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "pi.start",
+        "title": "Pi: Start Session",
+        "category": "Pi"
+      },
+      {
+        "command": "pi.startWithFile",
+        "title": "Pi: Add Current File to Session",
+        "category": "Pi"
+      }
+    ]
+  },
   "main": "./dist/extension.js",
   "scripts": {
     "compile": "tsc",
     "watch": "tsc -watch",
-    "check": "npm run check --workspaces"
+    "check": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "^25.8.0",
     "@types/vscode": "^1.80.0",
     "typescript": "^5.2.2"
   }
