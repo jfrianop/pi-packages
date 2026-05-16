@@ -1,0 +1,76 @@
+{
+  "name": "pi-vscode-extension",
+  "displayName": "Pi Coding Agent",
+  "description": "VS Code Extension for Pi Coding Agent",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:pi.start",
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pi-agent-view",
+          "title": "Pi Agent",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "pi-agent-view": [
+        {
+          "id": "pi-chat",
+          "name": "Pi Chat",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "pi.start",
+        "title": "Pi: Start Session"
+      }
+    ],
+    "configuration": {
+      "title": "Pi Agent",
+      "properties": {
+        "pi.model": {
+          "type": "string",
+          "default": "",
+          "description": "Default model ID (e.g. claude-3-7-sonnet-20250219)."
+        },
+        "pi.provider": {
+          "type": "string",
+          "default": "",
+          "description": "Default model provider (e.g. anthropic)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --external:@earendil-works/pi-coding-agent --format=esm --platform=node",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.3.3"
+  }
+}
