@@ -23,8 +23,9 @@ During the implementation of Stage 1, several critical architectural lessons wer
 
 1. **Webview Provider:** Implement a `WebviewViewProvider` to host the agent chat in the Activity Bar / Primary Sidebar (`pi-agent-view`).
 2. **Frontend Architecture:** Set up a lightweight frontend framework (e.g., React, Svelte, or vanilla web components) within the webview to handle the chat state.
-   * **Note:** The Webview will need its own separate `esbuild` compilation step because it runs in a browser context, whereas the extension host runs in a Node/ESM context.
-3. **Message Bridge:** Establish a robust two-way RPC message-passing system between the Webview (UI) and the Extension Host (Agent Core) using `webview.webview.postMessage` and `webview.webview.onDidReceiveMessage`.
+   * **Note:** The Webview will need its own separate `esbuild` or `vite` compilation step because it runs in a Browser context (ESM/React), whereas the extension host runs in a Node/ESM context.
+   * **Development Mode:** Like the `Continue` extension, during development (`ExtensionMode.Development`), it is highly recommended to serve the Webview UI from a local dev server (e.g., `http://localhost:5173`) to get Hot Module Replacement (HMR). In production, load the compiled JS/CSS from the extension's local `dist` folder via `webview.asWebviewUri()`.
+3. **Message Bridge:** Establish a robust two-way RPC message-passing system between the Webview (UI) and the Extension Host (Agent Core) using `webview.postMessage` and `webview.onDidReceiveMessage`.
    * **Crucial Detail:** You must subscribe to the `pi-coding-agent`'s session events (`session.subscribe((event) => {...})`) inside `extension.ts` and forward events like `message_update`, `text_delta`, and `tool_execution_start` over the message bridge to the webview.
 4. **Chat Implementation:** 
    - Render user messages, agent responses, and thinking/streaming states.
