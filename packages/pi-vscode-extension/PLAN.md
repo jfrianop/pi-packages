@@ -22,11 +22,13 @@ During the implementation of Stage 1, several critical architectural lessons wer
 **Objective:** Create the primary user interface for communicating with the agent.
 
 1. **Webview Provider:** Implement a `WebviewViewProvider` to host the agent chat in the Activity Bar / Primary Sidebar (`pi-agent-view`).
-2. **Frontend Architecture:** Set up a lightweight frontend framework (e.g., React or Svelte) within the webview to handle the chat state.
-3. **Message Bridge:** Establish a robust two-way RPC message-passing system between the Webview (UI) and the Extension Host (Agent Core).
+2. **Frontend Architecture:** Set up a lightweight frontend framework (e.g., React, Svelte, or vanilla web components) within the webview to handle the chat state.
+   * **Note:** The Webview will need its own separate `esbuild` compilation step because it runs in a browser context, whereas the extension host runs in a Node/ESM context.
+3. **Message Bridge:** Establish a robust two-way RPC message-passing system between the Webview (UI) and the Extension Host (Agent Core) using `webview.webview.postMessage` and `webview.webview.onDidReceiveMessage`.
+   * **Crucial Detail:** You must subscribe to the `pi-coding-agent`'s session events (`session.subscribe((event) => {...})`) inside `extension.ts` and forward events like `message_update`, `text_delta`, and `tool_execution_start` over the message bridge to the webview.
 4. **Chat Implementation:** 
    - Render user messages, agent responses, and thinking/streaming states.
-   - Wire the input box to the agent's prompt ingestion.
+   - Wire the input box to call `session.prompt(text)` via the message bridge.
    - Stream the agent's textual output to the webview in real-time.
 
 ## Stage 3: Context Management
