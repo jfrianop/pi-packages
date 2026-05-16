@@ -12,7 +12,8 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:pi.start"
+    "onCommand:pi.start",
+    "onStartupFinished"
   ],
   "contributes": {
     "viewsContainers": {
