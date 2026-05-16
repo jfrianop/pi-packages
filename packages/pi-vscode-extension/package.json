@@ -11,7 +11,9 @@
     "Programming Languages"
   ],
   "main": "./dist/extension.js",
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:pi.start"
+  ],
   "contributes": {
     "viewsContainers": {
       "activitybar": [

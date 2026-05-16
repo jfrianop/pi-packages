@@ -11,7 +11,9 @@ import {
 
 let runtimeInstance: any = null;
 
-export async function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
+  console.log('Pi Coding Agent extension is now active!');
+
   let disposable = vscode.commands.registerCommand(
     'pi.start',
     async () => {
