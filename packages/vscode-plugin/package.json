@@ -1,0 +1,23 @@
+{
+  "name": "@pi/vscode-plugin",
+  "displayName": "Pi Coding Agent VS Code Extension",
+  "description": "VS Code extension for the pi coding agent.",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "compile": "tsc",
+    "watch": "tsc -watch",
+    "check": "npm run check --workspaces"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.2.2"
+  }
+}

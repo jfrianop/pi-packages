@@ -1,0 +1,10 @@
+{
+  "name": "pi-packages",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "check": "npm run check --workspaces"
+  }
+}
