@@ -10,6 +10,14 @@ This document outlines the phased development plan for the `pi-vscode-extension`
 3. **Core Initialization:** Import `@earendil-works/pi-coding-agent` into the extension host. Create a session manager that initializes the agent core using the current VS Code workspace path as the working directory.
 4. **Configuration Mapping:** Expose essential `pi` configuration options to VS Code's `settings.json`. Map these to an in-memory `SettingsManager` or sync them to the `.pi/settings.json` directory.
 
+### Insights from Stage 1 Development
+During the implementation of Stage 1, several critical architectural lessons were learned that must be adhered to in future stages:
+* **ESM & Asset Resolution:** The `@earendil-works/pi-coding-agent` module relies on `import.meta.url` to dynamically resolve internal assets (themes, HTML templates) at runtime. Bundling the extension as CommonJS breaks this functionality. The VS Code extension **must** be configured as an ES Module (`"type": "module"` in `package.json`), and `esbuild` must target `--format=esm`.
+* **External Core:** To further ensure runtime paths are correct and to avoid massive bundle sizes, `@earendil-works/pi-coding-agent` must be marked as an `--external` dependency in the `esbuild` compilation step.
+* **Explicit Activation Events:** Although VS Code 1.74+ infers `activationEvents` from contributed commands, relying on an empty array (`[]`) can fail unpredictably. Explicitly defining `"onCommand:pi.start"` and `"onStartupFinished"` guarantees the extension host loads the plugin successfully.
+* **Monorepo Hoisting:** Duplicate nested `node_modules` folders can cause type mismatch issues. Always ensure dependencies (like `@types/vscode`) match the root workspace definitions so `npm` correctly hoists them to the root.
+* **Output Channel Logging:** The extension host swallows silent initialization errors. A native `vscode.window.createOutputChannel` must be utilized for catching initialization and runtime errors.
+
 ## Stage 2: Chat UI and Webview Provider
 **Objective:** Create the primary user interface for communicating with the agent.
 
